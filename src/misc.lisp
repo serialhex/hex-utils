@@ -15,6 +15,7 @@
                     (last body))
             (mk-conds body)))))
 |#
+
 (defmacro! conditional (o!itm pred &body body)
   `(cond
     ,@(mapcar
@@ -34,3 +35,9 @@
 ;     ("stop"         (stop-engine))
 ;     ("quit"         (setf *quit* t))))
 
+(defmacro when-check (&rest args)
+  `(progn
+    ,@(mapcar
+        (lambda (x)
+          `(when ,(car x) ,(cadr x)))
+        args)))

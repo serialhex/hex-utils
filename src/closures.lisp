@@ -14,6 +14,16 @@
                            `(cdr ,g!args)))))
           ds))))
 
+(defmacro def-dfn (name args &rest body)
+  `(defun ,name ,args
+        (dlambda ,@body)))
+
+;; fix this...
+(defmacro! dfn-closure (name let-bindings &rest body)
+  `(setf (symbol-function ',name)
+    (let ,(let-binding-transform let-bindings)
+      (dlambda ,@body))))
+
 (defmacro alet-fsm (&rest states)
   `(macrolet ((state (s)
                 `(setq this #',s)))

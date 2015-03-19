@@ -1,19 +1,9 @@
 (in-package :hex-utils)
 
-;; macro utils
-;; utilities for making macros & made of macros
-;; all of these are general-purpose, and thus are 'utilities'
-;; don't think that I'm gonna stick all my macros here...
-;; that's be silly...
-;; like sticking all my functions in one file
-;;
-;; these are non-attributed, to keep the file size small,
-;; but you may be able to find these (or variants thereof)
-;; in the following books:
-;; "Let Over Lambda" by Doug Hoyte
-;; "On Lisp" by Paul Graham
+;; defmacro-BANG!
 
-; (load "./utils.lisp")
+;; gotta make sure it loads and compiles!
+(eval-when (:compile-toplevel :load-toplevel :execute)
 
 (defun g!-symbol-p (s)
   (and (symbolp s)
@@ -100,3 +90,4 @@
         `(let ,(mapcar #'list (list ,@gs) (list ,@os))
           ,(progn ,@body)))))
 
+)

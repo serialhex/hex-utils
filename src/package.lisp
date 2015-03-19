@@ -21,9 +21,13 @@
 
             ; misc
             #:conditional
+            #:when-check
 
             ; closures
             #:dlambda
+            #:def-dfn
+            #:dfn-closure
+            #:alet-fsm
             #:alet-hotpatch
             #:let-hotpatch
 
@@ -35,6 +39,21 @@
             #:pandoriclet-get
             #:pandoriclet-set
             #:get-pandoric
+            #:with-pandoric
+            #:pandoric-hotpatch
+            #:pandoric-recode
+            #:plambda
+            #:defpan
+            #:pandoric-eval
+
+            ; efficency
+            #:#\f
+            #:fast-progn
+            #:safe-progn
+            #:fast-keywords-strip
+            #:defun-with-fast-keywords
+            ; #:fformat
+            #:dis
 
             ; lazy
             #:lazy
