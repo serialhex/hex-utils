@@ -21,7 +21,11 @@
     ,@(mapcar
       (lambda (x)
         `((funcall ,pred ,g!itm ,(car x)) ,@(cdr x)))
-      body)))
+      (butlast body))
+    ,(let ((end (car (last body))))
+      (if (eq t (car end))
+          end
+          `((funcall ,pred ,g!itm ,(car end)) ,@(cdr end))))))
 ;; example:
 ; (defun run-game (msg)
 ;   (conditional
@@ -33,7 +37,8 @@
 ;     ("makemove"     (makemove (cdr msg)))
 ;     ("go"           (go))
 ;     ("stop"         (stop-engine))
-;     ("quit"         (setf *quit* t))))
+;     ("quit"         (setf *quit* t)))
+;     (t              "I gots nuttin..."))
 
 (defmacro whens (&rest args)
   `(progn
