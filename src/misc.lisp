@@ -1,7 +1,6 @@
 (in-package :hex-utils)
 
 ; (load "macro-utils.lisp")
-#|  ; why did i write this one???
 (defmacro! conditional (o!itm pred &body body)
   (flet ((mk-conds (items)
             (mapcar
@@ -14,18 +13,6 @@
                       (butlast body))
                     (last body))
             (mk-conds body)))))
-|#
-
-(defmacro! conditional (o!itm pred &body body)
-  `(cond
-    ,@(mapcar
-      (lambda (x)
-        `((funcall ,pred ,g!itm ,(car x)) ,@(cdr x)))
-      (butlast body))
-    ,(let ((end (car (last body))))
-      (if (eq t (car end))
-          end
-          `((funcall ,pred ,g!itm ,(car end)) ,@(cdr end))))))
 ;; example:
 ; (defun run-game (msg)
 ;   (conditional
