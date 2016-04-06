@@ -10,6 +10,7 @@
             #:mklist
             #:mkstr
             #:symb
+            #:keywordify
             #:group
             #:flatten
 
@@ -21,7 +22,8 @@
 
             ; misc
             #:conditional
-            #:when-check
+            #:whens
+            #:exlambda
 
             ; closures
             #:dlambda
@@ -47,13 +49,35 @@
             #:pandoric-eval
 
             ; efficency
-            #:#\f
+            #:\#\f
             #:fast-progn
             #:safe-progn
             #:fast-keywords-strip
             #:defun-with-fast-keywords
             ; #:fformat
             #:dis
+            #:with-fast-stack
+
+            ; tlist
+            #:make-tlist
+            #:tlist-left
+            #:tlist-right
+            #:tlist-empty-p
+            #:tlist-add-left
+            #:tlist-add-right
+            #:tlist-rem-left
+            #:tlist-update
+            #:number-of-conses
+            #:counting-cons
+            #:with-conses-counted
+            #:counting-push
+            #:with-cons-pool
+            #:cons-pool-cons
+            #:cons-pool-free
+            #:make-cons-pool-stack
+            #:make-shared-cons-pool-stack
+            #:with-dynamic-cons-pools
+            #:fill-cons-pool
 
             ; lazy
             #:lazy
@@ -86,4 +110,4 @@
             #:awhile2
             #:acond2
             #:do-file
-            #:#\`))
+            #:\#\`))

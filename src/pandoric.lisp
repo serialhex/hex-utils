@@ -1,4 +1,5 @@
 (in-package :hex-utils)
+(eval-when (:execute :compile-toplevel :load-toplevel)
 
 (defmacro pandoriclet (letargs &rest body)
   (let ((letargs (cons
@@ -42,20 +43,18 @@
     (funcall ,box :pandoric-set ,sym ,val)
     ,val))
 
-(eval-when (:execute :compile-toplevel :load-toplevel)
 (defmacro! with-pandoric (syms o!box &rest body)
   `(symbol-macrolet
     (,@(mapcar #`(,a1 (get-pandoric ,g!box ',a1))
               syms))
     ,@body))
-)
 
 ;; this is only here for sbcl, which won't run this code w/o it!
-(eval-when (:execute)
+; (eval-when (:execute)
 (defun pandoric-hotpatch (box new)
   (with-pandoric (this) box
     (setq this new)))
-)
+; )
 
 (defmacro pandoric-recode (vars box new)
   `(with-pandoric (this ,@vars) ,box
@@ -89,3 +88,5 @@
     (eval `(with-pandoric
             ,',vars pandoric-eval-tunnel
             ,, expr))))
+
+)

@@ -83,3 +83,29 @@
               #`(type ,(car a1) ,(cadr a1))
               (remove-if-not #'consp args)))
         ,@body))))
+
+(defmacro! with-fast-stack
+           ((sym &key (type 'fixnum) (size 1000) (safe-zone 100))
+            &rest body)
+  `(let ((,g!index ,safe-zone)
+         (,g!mem (make-array ,(+ size (* 2 safe-zone))
+                             :element-type ',type)))
+    (declare (type (simple-array ,type) ,g!mem)
+             (type fixnum ,g!index))
+    (macrolet
+      ((,(symb 'fast-push- sym) (val)
+            `(locally #f
+                (setf (aref ,',g!mem ,',g!index) ,val)
+                (incf ,',g!index)))
+       (,(symb 'fast-pop- sym) ()
+            `(locally #f
+                (decf ,',g!index)
+                (aref ,',g!mem ,',g!index)))
+       (,(symb 'check-stack- sym) ()
+            `(progn
+              (if (<= ,',g!index ,,safe-zone)
+                (error "Stack underflow: ~a" ',',sym))
+              (if (<= ,,(- size safe-zone)
+                      ,',g!index)
+                (error "Stack overflow: ~a" ',',sym)))))
+      ,@body)))

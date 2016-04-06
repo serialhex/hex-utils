@@ -36,6 +36,9 @@
 (defun symb (&rest args)
   (values (intern (apply #'mkstr args))))
 
+(defun keywordify (&rest args)
+  (values (intern (apply #'mkstr args) :keyword)))
+
 (defun group (source n)
   (if (zerop n) (error "zero length"))
   (labels ((rec (source acc)

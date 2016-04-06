@@ -35,7 +35,7 @@
 ;     ("stop"         (stop-engine))
 ;     ("quit"         (setf *quit* t))))
 
-(defmacro when-check (&rest args)
+(defmacro whens (&rest args)
   `(progn
     ,@(mapcar
         (lambda (x)

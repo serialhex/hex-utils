@@ -3,7 +3,7 @@
 ;; defmacro-BANG!
 
 ;; gotta make sure it loads and compiles!
-(eval-when (:compile-toplevel :load-toplevel :execute)
+(eval-when (:execute :load-toplevel :compile-toplevel)
 
 (defun g!-symbol-p (s)
   (and (symbolp s)
@@ -83,6 +83,8 @@
 ; with-gensyms condlet >case mvpsetq mvdo
 ; to get an idea of the abstraction needed
 
+
+;origional defmacro! function
 (defmacro defmacro! (name args &rest body)
   (let* ((os (remove-if-not #'o!-symbol-p args))
          (gs (mapcar #'o!-symbol-to-g!-symbol os)))
@@ -90,4 +92,20 @@
         `(let ,(mapcar #'list (list ,@gs) (list ,@os))
           ,(progn ,@body)))))
 
+#|
+(defmacro defmacro! (name args &rest body)
+  (let* ((os (remove-if-not #'o!-symbol-p args))
+         (gs (mapcar #'o!-symbol-to-g!-symbol os)))
+    `(progn
+      (defmacro/g! ,name ,args
+        `(let ,(mapcar #'list (list ,@gs) (list ,@os))
+          ,(progn ,@body)))
+      (if (stringp ,(car body))
+        (setf (documentation ',name 'function) ,(car body)))
+      ',name)))
+(setf (documentation 'defmacro! 'function)
+  "awesome macro making utiltity, with auto-gensyms and once-only functionality!
+  oh, and the ability to add docs like regular macros... except in ecl, cause ecl
+  people don't like to be able to `setf` docs! :'(")
+|#
 )

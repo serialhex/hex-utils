@@ -20,3 +20,11 @@ evaling *element* once each time, thus if you want
       (dotimes (,g!count ,size)
         (setf new-list (cons (funcall ,element-fn ,g!count) new-list)))
       new-list)))
+
+
+(defmacro! recurser (lst &body body)
+  "this is for all those cases where you want to recursivly work
+on a list, but are tired of writing `(if (not (nil? lst)) (blah) (halb))`
+or whatever... so MACRO!"
+  ; not yet implemented...
+  )

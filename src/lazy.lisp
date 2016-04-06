@@ -1,3 +1,4 @@
+(in-package :hex-utils)
 ;; from "Land of Lisp" by Conrad Barski M.D.
 
 (defmacro lazy (&body body)
@@ -80,3 +81,19 @@
       (lazy-car lst)
       (lazy-nth (1- n) (lazy-cdr lst))))
 
+(defmacro! lazy-setup (lazy-func args &rest body)
+"This is for when you need to run the setup for a function, before you run the
+real function, but you don't want to run it right now.  You specify the lazy-func
+as yout first argument, then you specify the args & body of your actual function.
+Nice feature: the lazy function can reference arguments passed in to your
+soon-to-be not lazy function!"
+  `(progn
+    (setq ,g!lazy-fn
+      (lambda ,args
+        ,lazy-func
+        (setq ,g!lazy-fn
+              (lambda ,args
+                ,@body))
+        (funcall ,g!lazy-fn ,@args)))
+    (lambda ,args
+      (funcall ,g!lazy-fn ,@args))))
